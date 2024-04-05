@@ -11,4 +11,9 @@ int main(){
     T.Union(2, 0);
     for(int i = 0; i < n; i++)
         cout << T.Find(i) << " ";
+    cout << endl << endl;
+    UR_NC Q;
+    Q.init(n);
+    Q.Union(2, 0);
+    Q.PrintFullData();
 }
