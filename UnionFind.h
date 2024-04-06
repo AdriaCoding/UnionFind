@@ -49,11 +49,9 @@ int full_compression_find (Vec& P, int x);
 int full_compression_find_4QU (Vec& P, int x);
 
 int path_splitting_find (Vec& P, int x);
-int path_splitting_find_4UR (Vec& P, int x);
 int path_splitting_find_4QU (Vec& P, int x);
 
 int path_halving_find (Vec& P, int x);
-int path_halving_find_4UR (Vec& P, int x);
 int path_halving_find_4QU (Vec& P, int x);
 
 void quick_union(Vec& root, int rx, int ry);

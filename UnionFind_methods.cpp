@@ -25,7 +25,20 @@ int full_compression_find (Vec& P, int x) {
     P[x] = full_compression_find(P, P[x]);
     return P[x];
 }
-
+int full_compression_find_4UR (Vec& P, int x) {
+    int rx = x;
+    while (P[rx] >= 0) rx = P[rx];
+    int rank_decrement = 0;
+    while (P[x] >= 0){
+        int aux = x;
+        x = P[x];
+        P[aux] = rx;
+        rank_decrement++;
+    }
+    P[rx] = std::min(P[x], P[rx] - 1);
+    return rx;
+    
+}
 int full_compression_find_4QU (Vec& root, int x) {
     if (root[x] == x) return x;
 

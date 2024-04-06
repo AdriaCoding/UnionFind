@@ -52,10 +52,10 @@ UnionFind::UnionFind(int n, UnionMethod union_method, FindMethod find_method)
                     findFunc = full_compression_find;
                     break;
                 case FindMethod::PATH_SPLITTING:
-                    findFunc = path_splitting_find_4UR;
+                    findFunc = path_splitting_find;
                     break;
                 case FindMethod::PATH_HALVING:
-                    findFunc = path_halving_find_4UR;
+                    findFunc = path_halving_find;
                     break;
             }
             break;
