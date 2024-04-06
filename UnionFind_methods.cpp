@@ -4,7 +4,7 @@
 
 using Vec = std::vector<int>;
 
-// Find implementations
+// NO COMPRESSION implementations for FIND
 
 int no_compression_find (Vec& P, int x) {
     while (P[x] >= 0) x = P[x];
@@ -17,12 +17,15 @@ int no_compression_find_4QU(Vec& root, int x) {
     return x;
 }
 
+// FULL COMPRESSION implementations for FIND
+
 int full_compression_find (Vec& P, int x) {
     if (P[x] < 0) return x;
 
     P[x] = full_compression_find(P, P[x]);
     return P[x];
 }
+
 int full_compression_find_4QU (Vec& root, int x) {
     if (root[x] == x) return x;
 
@@ -30,8 +33,25 @@ int full_compression_find_4QU (Vec& root, int x) {
     return root[x];
 }
 
+// PATH SPLITTING heuristic implementation for FIND
+
 int path_splitting_find (Vec& P, int x) {
     while (P[x] >= 0){
+        if (P[P[x]] < 0){
+            return P[x];
+        }
+        int aux = P[x];
+        P[x] = P[P[x]];
+        x = aux;
+    }
+    return x;
+}
+int path_splitting_find_4UR (Vec& P, int x) {
+    //int rank_decrement = 0;
+    while (P[x] >= 0){
+        if (P[P[x]] < 0){
+            return P[x];
+        }
         int aux = P[x];
         P[x] = P[P[x]];
         x = aux;
@@ -46,6 +66,8 @@ int path_splitting_find_4QU (Vec& P, int x) {
     }
     return x;
 }
+
+// PATH HALVING heuristic implementation for FIND
 
 int path_halving_find (Vec& P, int x) {
     while (P[x] >= 0){
@@ -78,7 +100,7 @@ int path_halving_find_4QU (Vec& P, int x) {
     return x;
 }
 
-// Union implementations
+// Implementations for UNION
 
 void quick_union(Vec& root, int rx, int ry) {
     if (rx != ry){

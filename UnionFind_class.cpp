@@ -16,38 +16,71 @@ UnionFind::UnionFind(int n, UnionMethod union_method, FindMethod find_method)
             unionFunc = union_by_weight;
     }
 
-    // Initialize FindMethod
-    switch (find_method) {
-        case FindMethod::NO_COMPRESSION:
-            union_method == UnionMethod::QUICK_UNION
-            ? findFunc = no_compression_find_4QU
-            : findFunc = no_compression_find;
-            break;
-        case FindMethod::FULL_COMPRESSION:
-            union_method == UnionMethod::QUICK_UNION
-            ? findFunc = full_compression_find_4QU
-            : findFunc = full_compression_find;
-            break;        
-        case FindMethod::PATH_SPLITTING:
-            union_method == UnionMethod::QUICK_UNION
-            ? findFunc = path_splitting_find_4QU
-            : findFunc = path_splitting_find;
-            break;
-        case FindMethod::PATH_HALVING:
-            switch (union_method){
-                case UnionMethod::QUICK_UNION:
+    switch (union_method) {
+        case UnionMethod::QUICK_UNION:
+        // Initialize vector according to the union method
+            for (int i = 0; i < n; ++i) V[i] = i; 
+        // Initialize UnionMethod
+            unionFunc = quick_union;  
+        // Get the appropiate find method          
+            switch (find_method) {
+                case FindMethod::NO_COMPRESSION:
+                    findFunc = no_compression_find_4QU;
+                    break;
+                case FindMethod::FULL_COMPRESSION:
+                    findFunc = full_compression_find_4QU;
+                    break;
+                case FindMethod::PATH_SPLITTING:
+                    findFunc = path_splitting_find_4QU;
+                    break;
+                case FindMethod::PATH_HALVING:
                     findFunc = path_halving_find_4QU;
                     break;
-                
-                case UnionMethod::RANK:
+            }
+            break;
+        case UnionMethod::RANK:
+        // Initialize vector according to the union method
+            for (int i = 0; i < n; ++i) V[i] = -1; 
+        // Initialize UnionMethod
+            unionFunc = union_by_rank;  
+        // Get the appropiate find method  
+            switch (find_method) {
+                case FindMethod::NO_COMPRESSION:
+                    findFunc = no_compression_find;
+                    break;
+                case FindMethod::FULL_COMPRESSION:
+                    findFunc = full_compression_find;
+                    break;
+                case FindMethod::PATH_SPLITTING:
+                    findFunc = path_splitting_find_4UR;
+                    break;
+                case FindMethod::PATH_HALVING:
                     findFunc = path_halving_find_4UR;
                     break;
-                case UnionMethod::WEIGHT:
+            }
+            break;
+        case UnionMethod::WEIGHT:
+        // Initialize vector according to the union method
+            for (int i = 0; i < n; ++i) V[i] = -1; 
+        // Initialize UnionMethod
+            unionFunc = union_by_weight;  
+        // Get the appropiate find method 
+            switch (find_method) {
+                case FindMethod::NO_COMPRESSION:
+                    findFunc = no_compression_find;
+                    break;
+                case FindMethod::FULL_COMPRESSION:
+                    findFunc = full_compression_find;
+                    break;
+                case FindMethod::PATH_SPLITTING:
+                    findFunc = path_splitting_find;
+                    break;
+                case FindMethod::PATH_HALVING:
                     findFunc = path_halving_find;
                     break;
             }
-            break; 
-    }   
+            break;
+    }
 }
 
 int UnionFind::Find(int x) {

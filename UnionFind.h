@@ -44,14 +44,17 @@ public:
 // Function declarations of UnionFind_methods.cpp
 int no_compression_find(Vec& P, int x);
 int no_compression_find_4QU(Vec& root, int x);
+
 int full_compression_find (Vec& P, int x);
 int full_compression_find_4QU (Vec& P, int x);
+
 int path_splitting_find (Vec& P, int x);
+int path_splitting_find_4UR (Vec& P, int x);
 int path_splitting_find_4QU (Vec& P, int x);
+
 int path_halving_find (Vec& P, int x);
 int path_halving_find_4UR (Vec& P, int x);
 int path_halving_find_4QU (Vec& P, int x);
-
 
 void quick_union(Vec& root, int rx, int ry);
 void union_by_rank(Vec& P, int rx, int ry);

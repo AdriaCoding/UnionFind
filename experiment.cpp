@@ -12,9 +12,17 @@ int main() {
     UnionFind QU_NC(n, UnionMethod::QUICK_UNION, FindMethod::NO_COMPRESSION);   
     UnionFind QU_PH(n, UnionMethod::QUICK_UNION, FindMethod::PATH_SPLITTING);
     UnionFind QU_FC(n, UnionMethod::QUICK_UNION, FindMethod::FULL_COMPRESSION);
-    UnionFind UR_NC(n, UnionMethod::WEIGHT, FindMethod::NO_COMPRESSION);
-    UnionFind UR_PH(n, UnionMethod::WEIGHT, FindMethod::PATH_SPLITTING);
-    UnionFind UR_FC(n, UnionMethod::WEIGHT, FindMethod::FULL_COMPRESSION);
+    UnionFind UR_NC(n, UnionMethod::RANK, FindMethod::NO_COMPRESSION);
+    UnionFind UR_PH(n, UnionMethod::RANK, FindMethod::PATH_SPLITTING);
+    UnionFind UR_FC(n, UnionMethod::RANK, FindMethod::FULL_COMPRESSION);
+
+    UR_FC.Union(2, 3);
+    UR_FC.Union(1, 2);
+    cout << UR_FC.Find(2) << endl;
+    UR_FC.PrintContent();
+    cout << "LILO" << endl;
+
+
 
     ufs.push_back(QU_NC); ufs.push_back(QU_PH); ufs.push_back(QU_FC);
     ufs.push_back(UR_NC); ufs.push_back(UR_PH); ufs.push_back(UR_FC);
@@ -26,7 +34,7 @@ int main() {
         uf.Union(6, 7);
         uf.Union(1, 3);
         uf.Union(5, 7);
-        uf.Union(3, 7);
+        //uf.Union(3, 7);
         uf.Find(0);
         uf.PrintContent();
     }
