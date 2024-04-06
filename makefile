@@ -1,14 +1,17 @@
-exp: UR_NC.o QU_NC.o experiment.o
-	g++ UR_NC.o QU_NC.o experiment.o -o exp
+CC = g++
+CFLAGS = -std=c++11 -Wall
+TARGET = unionfind
 
-experiment.o: experiment.cpp
-	g++ -c experiment.cpp 
+SRCS = experiment.cpp UnionFind.cpp methods.cpp
+OBJS = $(SRCS:.cpp=.o)
 
-QU_NC.o: QU_NC.cpp
-	g++ -c QU_NC.cpp
+all: $(TARGET)
 
-UR_NC.o: UR_NC.cpp
-	g++ -c UR_NC.cpp
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o $(TARGET)
+
+%.o: %.cpp
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm *.o exp
+	rm -f $(OBJS) $(TARGET)

@@ -1,20 +1,19 @@
 #include <iostream>
 #include <vector>
-#include "QU_NC.h"
+#include "UnionFind.h"
 
 using namespace std;
 
-int main(){
-    int n = 10;
-    cout << "QU_NC" << endl;
-    QU_NC T;
-    T.init(n);
-    T.Union(2, 0);
-    for(int i = 0; i < n; i++)
-        cout << T.Find(i) << " ";
-    cout << endl << endl;
-    UR_NC Q;
-    Q.init(n);
-    Q.Union(2, 0);
-    Q.PrintFullData();
+int main() {
+    int n = 10; 
+
+    UnionFind QU_D(n, DeleteThisFind, QuickUnion);
+    QU_D.Union(2, 4);
+    QU_D.PrintContent();
+
+    UnionFind QU_NC(n, NoCompressionFind_QU, QuickUnion);
+    QU_NC.Union(2, 4);
+    QU_NC.PrintContent();
+
+
 }
