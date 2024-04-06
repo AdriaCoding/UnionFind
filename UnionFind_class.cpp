@@ -1,29 +1,43 @@
 #include "UnionFind.h"
 
-UnionFind::UnionFind(int n, FindFunction f, UnionMethod union_method)
-    : findFunc(f)
+UnionFind::UnionFind(int n, UnionMethod union_method, FindMethod find_method)
 {
     V.resize(n);
-    switch (union_method) {
-        case UnionMethod::QUICK_UNION:
-            unionFunc = quick_union;
-            for (int i = 0; i < n; ++i) {
-                V[i] = i; 
-            }
-            break;
-        case UnionMethod::RANK:
-            unionFunc = union_by_rank;
-            for (int i = 0; i < n; ++i) {
-                V[i] = -1; 
-            }
-            break;
-        case UnionMethod::WEIGHT:
-            unionFunc = union_by_weight;
-            for (int i = 0; i < n; ++i) {
-                V[i] = -1; 
-            }
-            break;
+    if (union_method == UnionMethod::QUICK_UNION){
+        unionFunc = quick_union;        
+        for (int i = 0; i < n; ++i) V[i] = i; 
     }
+    else {
+        for (int i = 0; i < n; ++i) V[i] = -1; 
+        if (union_method == UnionMethod::RANK)
+            unionFunc = union_by_rank;
+        if (union_method == UnionMethod::WEIGHT)
+            unionFunc = union_by_weight;
+
+    }
+
+    switch (find_method) {
+        case FindMethod::NO_COMPRESSION:
+            union_method == UnionMethod::QUICK_UNION
+            ? findFunc = no_compression_find_4QU
+            : findFunc = no_compression_find;
+            break;
+        case FindMethod::FULL_COMPRESSION:
+            union_method == UnionMethod::QUICK_UNION
+            ? findFunc = full_compression_find
+            : findFunc = full_compression_find;
+            break;        
+        case FindMethod::PATH_SPLITTING:
+            union_method == UnionMethod::QUICK_UNION
+            ? findFunc = path_splitting_find
+            : findFunc = path_splitting_find;
+            break;
+        case FindMethod::PATH_HALVING:
+            union_method == UnionMethod::QUICK_UNION
+            ? findFunc = path_halving_find
+            : findFunc = path_halving_find;
+            break;     
+    }   
 }
 
 int UnionFind::Find(int x) {

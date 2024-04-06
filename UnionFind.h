@@ -18,6 +18,12 @@ enum class UnionMethod {
     RANK,
     WEIGHT
 };
+enum class FindMethod {
+    NO_COMPRESSION,
+    FULL_COMPRESSION,
+    PATH_SPLITTING,
+    PATH_HALVING
+};
 
 class UnionFind {
 private:
@@ -26,7 +32,7 @@ private:
     UnionFunction unionFunc;
 
 public:
-    UnionFind(int n, FindFunction f, UnionMethod u);
+    UnionFind(int n, UnionMethod u, FindMethod f);
 
     int Find(int x);
 
@@ -35,10 +41,10 @@ public:
     void PrintContent();
 };
 
-// Function declarations for UnionFunctions.cpp
+// Function declarations of UnionFind_methods.cpp
 int DeleteThisFind(Vec& root, int x);
 int no_compression_find(Vec& P, int x);
-int no_compression_find_for_quick_union(Vec& root, int x);
+int no_compression_find_4QU(Vec& root, int x);
 int full_compression_find (Vec& P, int x);
 int path_splitting_find (Vec& P, int x);
 int path_halving_find (Vec& P, int x);

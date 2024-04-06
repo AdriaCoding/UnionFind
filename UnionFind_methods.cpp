@@ -8,7 +8,7 @@ using Vec = std::vector<int>;
 int DeleteThisFind(Vec& root, int x){
     return root.size();
 }
-int no_compression_find_for_quick_union(Vec& root, int x) {
+int no_compression_find_4QU(Vec& root, int x) {
     while (x != root[x]) {
         x = root[x];
     }
