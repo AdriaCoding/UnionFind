@@ -1,18 +1,28 @@
 #include "UnionFind.h"
 
-UnionFind::UnionFind(int n, FindFunction f, UnionFunction u, VectorMeaning meaning = VectorMeaning::RANK)
-    : findFunc(f), unionFunc(u) 
+UnionFind::UnionFind(int n, FindFunction f, UnionMethod union_method)
+    : findFunc(f)
 {
     V.resize(n);
-    if (meaning == VectorMeaning::ROOT){
-        for (int i = 0; i < n; ++i) {
-            V[i] = i; 
-        }
-    }
-    else {
-        for (int i = 0; i < n; ++i) {
-            V[i] = -1; 
-        }
+    switch (union_method) {
+        case UnionMethod::QUICK_UNION:
+            unionFunc = quick_union;
+            for (int i = 0; i < n; ++i) {
+                V[i] = i; 
+            }
+            break;
+        case UnionMethod::RANK:
+            unionFunc = union_by_rank;
+            for (int i = 0; i < n; ++i) {
+                V[i] = -1; 
+            }
+            break;
+        case UnionMethod::WEIGHT:
+            unionFunc = union_by_weight;
+            for (int i = 0; i < n; ++i) {
+                V[i] = -1; 
+            }
+            break;
     }
 }
 
