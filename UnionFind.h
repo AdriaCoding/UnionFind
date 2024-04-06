@@ -3,7 +3,8 @@
 
 #include <vector>
 #include <functional>
-#include <algorithm> // if std::min is used in UnionFunctions.h
+#include <algorithm> // for std::min 
+#include <iostream>
 
 // Define function pointer types for Find and Union functions
 using FindFunction = std::function<int(const std::vector<int>&, int)>;
@@ -27,7 +28,7 @@ public:
 
 // Function declarations for UnionFunctions.cpp
 int DeleteThisFind(const std::vector<int>& root, int x);
-int NoCompressionFind_QU(const std::vector<int>& root, int x);
-void QuickUnion(std::vector<int>& root, int x, int y, int rx, int ry);
+int no_compression_find_for_quick_union(const std::vector<int>& root, int x);
+void quick_union(std::vector<int>& root, int x, int y, int rx, int ry);
 
 #endif // UNION_FIND_H

@@ -8,25 +8,25 @@
 int DeleteThisFind(const std::vector<int>& root, int x){
     return root.size();
 }
-int NoCompressionFind_QU(const std::vector<int>& root, int x) {
+int no_compression_find_for_quick_union(const std::vector<int>& root, int x) {
     while (x != root[x]) {
         x = root[x];
     }
     return x;
 }
-int NoCompressionFind_UR(const std::vector<int>& P, int x) {
+int no_compression_find(const std::vector<int>& P, int x) {
     while (P[x] >= 0) x = P[x];
     return x;
 }
 
 // Union implementations
 
-void QuickUnion(std::vector<int>& root, int x, int y, int rx, int ry) {
+void quick_union(std::vector<int>& root, int x, int y, int rx, int ry) {
     if (rx != ry){
         root[ry] = rx;
     }
 }
-void UnionByRank(std::vector<int>& P, int x, int y, int rx, int ry) {
+void union_by_rank(std::vector<int>& P, int x, int y, int rx, int ry) {
     if (rx != ry){
         if (P[rx] >= P[ry]) {
         // rx is the shortest
