@@ -2,31 +2,33 @@
 #include <iostream>
 #include <functional> // for std::function
 #include <algorithm> // for std::min
+using Vec = std::vector<int>;
 
 // Find implementations
 
-int DeleteThisFind(const std::vector<int>& root, int x){
+int DeleteThisFind(const Vec& root, int x){
     return root.size();
 }
-int no_compression_find_for_quick_union(const std::vector<int>& root, int x) {
+int no_compression_find_for_quick_union(const Vec& root, int x) {
     while (x != root[x]) {
         x = root[x];
     }
     return x;
 }
-int no_compression_find(const std::vector<int>& P, int x) {
+
+int no_compression_find(const Vec& P, int x) {
     while (P[x] >= 0) x = P[x];
     return x;
 }
 
 // Union implementations
 
-void quick_union(std::vector<int>& root, int x, int y, int rx, int ry) {
+void quick_union(Vec& root, int x, int y, int rx, int ry) {
     if (rx != ry){
         root[ry] = rx;
     }
 }
-void union_by_rank(std::vector<int>& P, int x, int y, int rx, int ry) {
+void union_by_rank(Vec& P, int x, int y, int rx, int ry) {
     if (rx != ry){
         if (P[rx] >= P[ry]) {
         // rx is the shortest
@@ -36,6 +38,5 @@ void union_by_rank(std::vector<int>& P, int x, int y, int rx, int ry) {
             P[rx] = std::min(P[rx], P[ry] - 1);
             P[rx] = ry;
         }
-        //--nr_blocks;
     }
 }
