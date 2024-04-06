@@ -16,14 +16,6 @@ int main() {
     UnionFind UR_PH(n, UnionMethod::RANK, FindMethod::PATH_SPLITTING);
     UnionFind UR_FC(n, UnionMethod::RANK, FindMethod::FULL_COMPRESSION);
 
-    UR_FC.Union(2, 3);
-    UR_FC.Union(1, 2);
-    cout << UR_FC.Find(2) << endl;
-    UR_FC.PrintContent();
-    cout << "LILO" << endl;
-
-
-
     ufs.push_back(QU_NC); ufs.push_back(QU_PH); ufs.push_back(QU_FC);
     ufs.push_back(UR_NC); ufs.push_back(UR_PH); ufs.push_back(UR_FC);
     
