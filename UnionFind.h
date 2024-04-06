@@ -11,7 +11,7 @@ using namespace std;
 // Define function pointer types for Find and Union functions
 using Vec = std::vector<int>;
 using FindFunction = std::function<int(std::vector<int>&, int)>;
-using UnionFunction = std::function<void(std::vector<int>&, int, int, int, int)>;
+using UnionFunction = std::function<void(std::vector<int>&, int, int)>;
 
 enum class UnionMethod {
     QUICK_UNION,
@@ -42,15 +42,18 @@ public:
 };
 
 // Function declarations of UnionFind_methods.cpp
-int DeleteThisFind(Vec& root, int x);
 int no_compression_find(Vec& P, int x);
 int no_compression_find_4QU(Vec& root, int x);
 int full_compression_find (Vec& P, int x);
+int full_compression_find_4QU (Vec& P, int x);
 int path_splitting_find (Vec& P, int x);
+int path_splitting_find_4QU (Vec& P, int x);
 int path_halving_find (Vec& P, int x);
+int path_halving_find_4QU (Vec& P, int x);
 
-void quick_union(Vec& root, int x, int y, int rx, int ry);
-void union_by_rank(Vec& P, int x, int y, int rx, int ry);
-void union_by_weight(Vec& P, int x, int y, int rx, int ry);
+
+void quick_union(Vec& root, int rx, int ry);
+void union_by_rank(Vec& P, int rx, int ry);
+void union_by_weight(Vec& P, int rx, int ry);
 
 #endif // UNION_FIND_H

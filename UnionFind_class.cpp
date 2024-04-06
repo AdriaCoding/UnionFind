@@ -13,7 +13,6 @@ UnionFind::UnionFind(int n, UnionMethod union_method, FindMethod find_method)
             unionFunc = union_by_rank;
         if (union_method == UnionMethod::WEIGHT)
             unionFunc = union_by_weight;
-
     }
 
     switch (find_method) {
@@ -24,17 +23,17 @@ UnionFind::UnionFind(int n, UnionMethod union_method, FindMethod find_method)
             break;
         case FindMethod::FULL_COMPRESSION:
             union_method == UnionMethod::QUICK_UNION
-            ? findFunc = full_compression_find
+            ? findFunc = full_compression_find_4QU
             : findFunc = full_compression_find;
             break;        
         case FindMethod::PATH_SPLITTING:
             union_method == UnionMethod::QUICK_UNION
-            ? findFunc = path_splitting_find
+            ? findFunc = path_splitting_find_4QU
             : findFunc = path_splitting_find;
             break;
         case FindMethod::PATH_HALVING:
             union_method == UnionMethod::QUICK_UNION
-            ? findFunc = path_halving_find
+            ? findFunc = path_halving_find_4QU
             : findFunc = path_halving_find;
             break;     
     }   
@@ -45,7 +44,7 @@ int UnionFind::Find(int x) {
 }
 
 void UnionFind::Union(int x, int y) {
-    unionFunc(V, x, y, Find(x), Find(y));
+    unionFunc(V, Find(x), Find(y));
 }
 
 void UnionFind::PrintContent() {
