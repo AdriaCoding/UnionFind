@@ -31,25 +31,51 @@ int full_compression_find_4QU (Vec& root, int x) {
 }
 
 int path_splitting_find (Vec& P, int x) {
-    int parent = P[x];
-    if (P[parent] < 0) return parent;
-
-    P[x] = P[parent]; //point to grandparent
-    return path_splitting_find(P, parent);
+    while (P[x] >= 0){
+        int aux = P[x];
+        P[x] = P[P[x]];
+        x = aux;
+    }
+    return x;
 }
 int path_splitting_find_4QU (Vec& P, int x) {
-    int parent = P[x];
-    if (P[parent] < 0) return parent;
-
-    P[x] = P[parent]; //point to grandparent
-    return path_splitting_find_4QU(P, parent);
+    while (P[x] != x){
+        int aux = P[x];
+        P[x] = P[P[x]];
+        x = aux;
+    }
+    return x;
 }
 
 int path_halving_find (Vec& P, int x) {
-    return 0;
+    while (P[x] >= 0){
+        if (P[P[x]] < 0){
+            return P[x];
+        }
+        P[x] = P[P[x]];
+        x = P[x];
+    }
+    return x;
+}
+int path_halving_find_4UR (Vec& P, int x) {
+    int rank_decrement = 0;
+    while (P[x] >= 0){
+        if (P[P[x]] < 0){
+            P[P[x]] += rank_decrement;
+            return P[x];
+        }
+        P[x] = P[P[x]];
+        x = P[x];
+        rank_decrement++;
+    }
+    return x;
 }
 int path_halving_find_4QU (Vec& P, int x) {
-    return 0;
+    while (P[x] != x){
+        P[x] = P[P[x]];
+        x = P[x];
+    }
+    return x;
 }
 
 // Union implementations

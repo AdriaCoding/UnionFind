@@ -3,6 +3,7 @@
 UnionFind::UnionFind(int n, UnionMethod union_method, FindMethod find_method)
 {
     V.resize(n);
+    // Initialize vector according to the union method
     if (union_method == UnionMethod::QUICK_UNION){
         unionFunc = quick_union;        
         for (int i = 0; i < n; ++i) V[i] = i; 
@@ -15,6 +16,7 @@ UnionFind::UnionFind(int n, UnionMethod union_method, FindMethod find_method)
             unionFunc = union_by_weight;
     }
 
+    // Initialize FindMethod
     switch (find_method) {
         case FindMethod::NO_COMPRESSION:
             union_method == UnionMethod::QUICK_UNION
@@ -32,10 +34,19 @@ UnionFind::UnionFind(int n, UnionMethod union_method, FindMethod find_method)
             : findFunc = path_splitting_find;
             break;
         case FindMethod::PATH_HALVING:
-            union_method == UnionMethod::QUICK_UNION
-            ? findFunc = path_halving_find_4QU
-            : findFunc = path_halving_find;
-            break;     
+            switch (union_method){
+                case UnionMethod::QUICK_UNION:
+                    findFunc = path_halving_find_4QU;
+                    break;
+                
+                case UnionMethod::RANK:
+                    findFunc = path_halving_find_4UR;
+                    break;
+                case UnionMethod::WEIGHT:
+                    findFunc = path_halving_find;
+                    break;
+            }
+            break; 
     }   
 }
 
