@@ -6,6 +6,7 @@ using namespace std;
 
 int main(){
     int n = 10;
+    cout << "QU_NC" << endl;
     QU_NC T;
     T.init(n);
     T.Union(2, 0);
