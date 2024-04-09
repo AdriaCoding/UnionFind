@@ -38,7 +38,10 @@ public:
 
     void Union(int x, int y);
 
+    string name;
+    
     void PrintContent();
+    
 };
 
 // Function declarations of UnionFind_methods.cpp

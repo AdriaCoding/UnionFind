@@ -6,7 +6,9 @@
 using namespace std;
 int main() {
     int n = 8; 
-
+    string str = "hola";
+    str += " mon";
+    cout << str << endl;
     vector<UnionFind> ufs;
 
     UnionFind QU_NC(n, UnionMethod::QUICK_UNION, FindMethod::NO_COMPRESSION);   
@@ -20,6 +22,7 @@ int main() {
     ufs.push_back(UR_NC); ufs.push_back(UR_PH); ufs.push_back(UR_FC);
     
     for (auto& uf : ufs) {
+        cout << "Results from " << uf.name << endl;
         uf.Union(0, 1);
         uf.Union(2, 3);
         uf.Union(4, 5);
