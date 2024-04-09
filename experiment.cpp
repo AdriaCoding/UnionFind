@@ -1,38 +1,45 @@
 #include <iostream>
 #include <vector>
+#include <random>
 #include "UnionFind.h"
 
-
 using namespace std;
-int main() {
-    int n = 8; 
-    string str = "hola";
-    str += " mon";
-    cout << str << endl;
-    vector<UnionFind> ufs;
 
-    UnionFind QU_NC(n, UnionMethod::QUICK_UNION, FindMethod::NO_COMPRESSION);   
-    UnionFind QU_PH(n, UnionMethod::QUICK_UNION, FindMethod::PATH_SPLITTING);
-    UnionFind QU_FC(n, UnionMethod::QUICK_UNION, FindMethod::FULL_COMPRESSION);
-    UnionFind UR_NC(n, UnionMethod::RANK, FindMethod::NO_COMPRESSION);
-    UnionFind UR_PH(n, UnionMethod::RANK, FindMethod::PATH_SPLITTING);
-    UnionFind UR_FC(n, UnionMethod::RANK, FindMethod::FULL_COMPRESSION);
-
-    ufs.push_back(QU_NC); ufs.push_back(QU_PH); ufs.push_back(QU_FC);
-    ufs.push_back(UR_NC); ufs.push_back(UR_PH); ufs.push_back(UR_FC);
-    
-    for (auto& uf : ufs) {
-        cout << "Results from " << uf.name << endl;
-        uf.Union(0, 1);
-        uf.Union(2, 3);
-        uf.Union(4, 5);
-        uf.Union(6, 7);
-        uf.Union(1, 3);
-        uf.Union(5, 7);
-        //uf.Union(3, 7);
-        uf.Find(0);
-        uf.PrintContent();
+vector<pair<int, int>> generateShuffledPairs(int n) {
+    vector<pair<int, int>> pairs;
+    for (int i = 0; i < n; ++i) {
+        for (int j = i + 1; j < n; ++j) {
+            pairs.push_back({i, j});
+        }
     }
+    random_device rd; // random number generator rd
+    mt19937 g(rd()); // Mersenne Twister seeded with rd
+    shuffle(pairs.begin(), pairs.end(), g);
+    return pairs;
+}
+
+
+
+int main() {
+    int n = 8; // number of elements
+    int m = n*(n-1) / 2; // number of pairs
+    int del = 4; // number of checking points
+
+    vector<pair<int, int>> pairs = generateShuffledPairs(n);
+
+    UnionMethod u = UnionMethod::WEIGHT;
+    FindMethod f = FindMethod::NO_COMPRESSION;
+    UnionFind UF(n, u, f); 
+
+    for (int i = 0; i < m; i++) {
+        if (i % del == 0) { // take measurements
+            UF.PrintContent();
+        }
+        int x = pairs[i].first;
+        int y = pairs[i].second;
+        UF.Union(x, y);
+    }
+
 
 
 

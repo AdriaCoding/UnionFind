@@ -30,6 +30,7 @@ private:
     Vec V;
     FindFunction findFunc;
     UnionFunction unionFunc;
+    int n_blocks; 
 
 public:
     UnionFind(int n, UnionMethod u, FindMethod f);
@@ -40,8 +41,11 @@ public:
 
     string name;
     
+    int PathLength(int x); 
+    int TotalPathLength();  
+    int TotalNumberOfChildren();
+
     void PrintContent();
-    
 };
 
 // Function declarations of UnionFind_methods.cpp

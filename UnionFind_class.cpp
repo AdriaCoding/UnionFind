@@ -2,7 +2,8 @@
 
 UnionFind::UnionFind(int n, UnionMethod union_method, FindMethod find_method)
 {
-    V.resize(n);
+    V.resize(n); n_blocks = n;
+
     if (union_method == UnionMethod::QUICK_UNION) {
         // Initialize UnionMethod
         unionFunc = quick_union;  
@@ -68,19 +69,61 @@ int UnionFind::Find(int x) {
 }
 
 void UnionFind::Union(int x, int y) {
-    unionFunc(V, Find(x), Find(y));
+    int rx = Find(x);
+    int ry = Find(y);
+    // If two different blocks are merged,
+    // decrement the counter of blocks by 1.
+    if (rx != ry) {
+        unionFunc(V, rx, ry);
+        --n_blocks;
+    }
+}
+
+int UnionFind::PathLength(int x){
+    int distance_to_representative = 0;
+    while (V[x] >= 0 && V[x] != x)
+    {   
+        x = V[x];
+        distance_to_representative++;
+    }
+    return distance_to_representative;
+}
+int UnionFind::TotalPathLength(){
+    int n = V.size();
+    int total_length = 0;
+    for (int x = 0; x < n; ++x)
+        total_length += PathLength(x);
+    return total_length;
+}
+
+int UnionFind::TotalNumberOfChildren(){
+    return V.size() - n_blocks;
 }
 
 void UnionFind::PrintContent() {
+    cout << "Contents of " << this->name; 
+    cout << " --- TPL = " << TotalPathLength(); 
+    cout << ", total n_children = "<< TotalNumberOfChildren();
+    cout << endl;
     int n = V.size();
+
+    cout << "V[i]---->";
     for (int i = 0; i < n; ++i) {
         if(V[i] >= 0) cout << " ";
         cout << V[i] << " ";
     }
     cout << endl;
+
+    cout << "TPL(i)-->";
     for (int i = 0; i < n; ++i) {
-        if(Find(i) >= 0) cout << " ";
-        cout << Find(i) << " ";
+        cout <<" "<< PathLength(i) << " ";
+    }
+    cout << endl;
+
+    cout << "Find(i)->";
+    for (int i = 0; i < n; ++i) {
+        cout << " "<< Find(i) << " ";
     }
     cout << endl << endl;
 }
+
