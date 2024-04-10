@@ -114,7 +114,7 @@ void UnionFind::PrintContent() {
     }
     cout << endl;
 
-    cout << "TPL(i)-->";
+    cout << "PL(i)--->";
     for (int i = 0; i < n; ++i) {
         cout <<" "<< PathLength(i) << " ";
     }
