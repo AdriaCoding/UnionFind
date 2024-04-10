@@ -5,6 +5,11 @@
 
 using namespace std;
 
+const int n = 8; // number of elements
+const int m = n*(n-1) / 2; // number of pairs
+// We will be taking measures n/del times. 
+const int del = 4;
+
 const UnionMethod union_methods[] = { 
     UnionMethod::QUICK_UNION,
     UnionMethod::RANK,
@@ -30,21 +35,22 @@ int TPL(UnionFind& uf){
 
 int TPU(UnionFind& uf, FindMethod f){
     if (f == FindMethod::NO_COMPRESSION) return 0;
-    if (f == FindMethod::FULL_COMPRESSION) 
-        return TPL(uf) - uf.TotalNumberOfChildren();
-    return 0;
+    if (f == FindMethod::PATH_HALVING){
+        int TPU = 0;
+        for (int i = 0; i < n; i++){
+            TPU += uf.PathLength(i)/2;
+        }
+        return TPU;
+    }
+    // if it is Full Compression or Path-Splitting
+    return TPL(uf) - uf.TotalNumberOfChildren();
 }
 
 
 int main() {
-    int n = 8; // number of elements
-    int m = n*(n-1) / 2; // number of pairs
-    int del = 4; // number of checking points
-
     vector<pair<int, int>> pairs = generateShuffledPairs(n);
-
     for (const auto& u : union_methods) {
-        FindMethod f = FindMethod::FULL_COMPRESSION;
+        FindMethod f = FindMethod::PATH_HALVING;
         UnionFind UF(n, u, f); 
 
         for (int i = 0; i < m; i++) {
@@ -57,5 +63,4 @@ int main() {
             UF.Union(x, y);
         }
     }
-
 }
