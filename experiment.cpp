@@ -1,19 +1,26 @@
 #include <iostream>
 #include <vector>
 #include <random>
+#include <fstream>
 #include "UnionFind.h"
 
 using namespace std;
 
-const int n = 8; // number of elements
+const int n = 1000; // number of elements
 const int m = n*(n-1) / 2; // number of pairs
-// We will be taking measures n/del times. 
-const int del = 4;
+// We will be taking measures m/del times. 
+const int del = n/100;
 
 const UnionMethod union_methods[] = { 
     UnionMethod::QUICK_UNION,
     UnionMethod::RANK,
     UnionMethod::WEIGHT
+};
+const FindMethod find_methods[] = {
+    FindMethod::NO_COMPRESSION,
+    FindMethod::FULL_COMPRESSION,
+    FindMethod::PATH_SPLITTING,
+    FindMethod::PATH_HALVING
 };
 
 vector<pair<int, int>> generateShuffledPairs(int n) {
@@ -49,18 +56,41 @@ int TPU(UnionFind& uf, FindMethod f){
 
 int main() {
     vector<pair<int, int>> pairs = generateShuffledPairs(n);
-    for (const auto& u : union_methods) {
-        FindMethod f = FindMethod::PATH_HALVING;
-        UnionFind UF(n, u, f); 
 
-        for (int i = 0; i < m; i++) {
-            if (i % del == 0) { // take measurements
-                printf("TPL = %d  TPU = %d \n", TPL(UF), TPU(UF, f));
-                UF.PrintContent();
+    string TPL_filename = "data/dataTPL_n" + to_string(n) + "_del" + to_string(del) + ".csv";
+    string TPU_filename = "data/dataTPU_n" + to_string(n) + "_del" + to_string(del) + ".csv";
+
+    ofstream TPL_file(TPL_filename);
+    ofstream TPU_file(TPU_filename);
+
+/*     TPL_file << "name"; TPU_file << "name";
+    for (int i = 0; i <m/del; i++){
+        TPL_file << "," << del*i;
+        TPU_file << "," << del*i;
+    }
+    TPL_file << endl; TPU_file << endl;
+ */
+    for (const auto& f: find_methods){   
+        for (const auto& u : union_methods) {
+            UnionFind UF(n, u, f); 
+            TPL_file << UF.name;
+            TPU_file << UF.name;
+
+            for (int i = 0; i < m; i++) {
+                if (i % del == 0) { // take measurements
+                    TPL_file << "," << TPL(UF);
+                    TPU_file << "," << TPU(UF, f);
+                }
+                if (UF.AllJoined()) {
+                    cout << " Union Find ~ " << UF.name;
+                    cout << " ~ is all-connected in " << i;
+                    cout << " steps." << endl;
+                    break;
+                }
+                UF.Union(pairs[i].first, pairs[i].second);
             }
-            int x = pairs[i].first;
-            int y = pairs[i].second;
-            UF.Union(x, y);
+            TPL_file << endl;
+            TPU_file << endl;  
         }
     }
 }

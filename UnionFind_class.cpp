@@ -100,9 +100,14 @@ int UnionFind::TotalNumberOfChildren(){
     return V.size() - n_blocks;
 }
 
-void UnionFind::PrintContent() {
+bool UnionFind::AllJoined(){
+    return n_blocks == 1;
+}
+
+void UnionFind::PrintContent(int TPU) {
     cout << "Contents of " << this->name; 
     cout << " --- TPL = " << TotalPathLength(); 
+    cout << " --- TPU = " << TPU;
     cout << ", total n_children = "<< TotalNumberOfChildren();
     cout << endl;
     int n = V.size();

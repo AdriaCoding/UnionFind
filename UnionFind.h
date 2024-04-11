@@ -45,7 +45,8 @@ public:
     int TotalPathLength();  
     int TotalNumberOfChildren();
 
-    void PrintContent();
+    bool AllJoined();
+    void PrintContent(int x);
 };
 
 // Function declarations of UnionFind_methods.cpp
