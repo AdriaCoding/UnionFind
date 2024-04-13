@@ -6,7 +6,7 @@
 
 using namespace std;
 
-const int n = 1000; // number of elements
+const int n = 10000; // number of elements
 const int m = n*(n-1) / 2; // number of pairs
 // We will be taking measures m/del times. 
 const int del = n/100;
@@ -77,9 +77,9 @@ int main() {
             TPU_file << UF.name;
 
             for (int i = 0; i < m; i++) {
-                if (i % del == 0) { // take measurements
-                    TPL_file << "," << TPL(UF);
-                    TPU_file << "," << TPU(UF, f);
+                if (i % del == 0 and i > 5) { // take measurements
+                    TPL_file << "," << (float)TPL(UF)/(float)i;
+                    TPU_file << "," << (float)TPU(UF, f)/(float)i;
                 }
                 if (UF.AllJoined()) {
                     cout << " Union Find ~ " << UF.name;
