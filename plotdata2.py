@@ -3,8 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Parameters
-n = 10000
-del_val = 100
+n = 5000
+del_val = 50
 
 # Load data from CSV files without headers
 TPL_filename = f"data/dataTPL_n{n}_del{del_val}.csv"
@@ -33,7 +33,7 @@ for row in QU_TPL_data.iterrows():
     ax1.plot(range(0, len(adjusted_values) * del_val, del_val), np.log(adjusted_values), label=f"{method_name}")
 
 ax1.set_xlabel("Unions performed (N)")
-ax1.set_ylabel("log(TPL / n)")
+ax1.set_ylabel("log(TPL / N)")
 ax1.legend()
 ax1.grid(True)
 
@@ -50,7 +50,7 @@ ax2.legend()
 ax2.grid(True)
 
 
-fig.suptitle("Quick Union", fontsize=16)
+fig.suptitle(f"Quick Union n = {n}", fontsize=16)
 
 plt.tight_layout()
 plt.savefig(f"plots/QU_n={n}_del={del_val}")
@@ -82,7 +82,7 @@ ax2.set_ylabel("TPU / N")
 ax2.legend()
 ax2.grid(True)
 
-fig.suptitle("Union by Rank", fontsize=16)
+fig.suptitle(f"Union by Rank n = {n}", fontsize=16)
 
 plt.tight_layout()
 plt.savefig(f"plots/UR_n={n}_del={del_val}")
@@ -115,7 +115,7 @@ ax2.set_ylabel("TPU / N")
 ax2.legend()
 ax2.grid(True)
 
-fig.suptitle("Union by Weight", fontsize=16)
+fig.suptitle(f"Union by Weight n = {n}", fontsize=16)
 
 plt.tight_layout()
 plt.savefig(f"plots/UW_n={n}_del={del_val}")
