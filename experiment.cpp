@@ -6,7 +6,7 @@
 
 using namespace std;
 
-const int n = 10000; // number of elements
+const int n = 5000; // number of elements
 const int m = n*(n-1) / 2; // number of pairs
 // We will be taking measures m/del times. 
 const int del = n/100;
